@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WhatWasIThinking
+
+A minimal, beautiful notes app to capture thoughts before they slip away. Built with Next.js 16 (App Router) + Go backend deployed on Railway.
+
+---
+
+## Features
+
+- Register & login with JWT authentication
+- Create, view, edit, delete notes
+- Right-side drawer for full note view
+- Clean landing page with cream/brown design system
+- Fully responsive
+
+## Tech Stack
+
+| Layer | Tech |
+|-------|------|
+| Framework | Next.js 16 (Turbopack) |
+| Styling | Tailwind CSS v4 |
+| Icons | Iconify (Phosphor) |
+| Fonts | Poppins (sans) + Lora (serif) |
+| Backend | Go (deployed on Railway) |
+
+## Project Structure
+
+```
+app/
+  page.tsx                  # Landing page
+  (auth)/
+    login/page.tsx          # Login
+    register/page.tsx       # Register
+  (protected)/
+    layout.tsx              # Auth guard + header
+    notes/page.tsx          # Notes dashboard
+lib/
+  apiClient.ts              # Fetch interceptor (auto token injection)
+  storage.ts                # localStorage wrapper
+  services/
+    authService.ts          # register, login, logout
+    notesService.ts         # getAll, create, update, delete
+components/
+  LoginForm.tsx
+  RegisterForm.tsx
+  NotesList.tsx
+  NoteCard.tsx              # Card with edit/delete + title click → drawer
+  CreateNote.tsx            # Modal to create note
+  EditNote.tsx              # Modal to edit note
+  NoteDrawer.tsx            # Right-side drawer for full note view
+```
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone & install
+
+```bash
+git clone https://github.com/your-username/whatwasithinking.git
+cd whatwasithinking
+npm install
+```
+
+### 2. Environment variables
+
+Create a `.env` file:
+
+```env
+NEXT_PUBLIC_API_URL=https://whatwasithinking-production.up.railway.app
+```
+
+> For local backend development, set `NEXT_PUBLIC_API_URL=http://localhost:8080`
+
+### 3. Run dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Endpoints
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+All requests go to `NEXT_PUBLIC_API_URL`.
 
-## Learn More
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `/api/v1/register` | No | Register user |
+| POST | `/api/v1/login` | No | Login, returns JWT in `user.token` |
+| GET | `/api/v1/notes` | Yes | Get all notes |
+| POST | `/api/v1/notes` | Yes | Create note |
+| PUT | `/api/v1/notes/:id` | Yes | Update note |
+| DELETE | `/api/v1/notes/:id` | Yes | Delete note |
 
-To learn more about Next.js, take a look at the following resources:
+Auth header: `Authorization: <token>`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## User Flow
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+/ (landing)
+  ├── /register → fill form → redirects to /login
+  └── /login    → fill form → redirects to /notes
 
-## Deploy on Vercel
+/notes (protected)
+  ├── View all notes (grid)
+  ├── Click title → drawer opens from right
+  ├── Pencil icon → edit modal
+  └── Trash icon → inline confirm → delete
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev      # Start dev server
+npm run build    # Production build
+npm run start    # Start production server
+npm run lint     # Lint
+```
