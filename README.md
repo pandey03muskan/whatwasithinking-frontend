@@ -59,16 +59,6 @@ cd whatwasithinking
 npm install
 ```
 
-### 2. Environment variables
-
-Create a `.env` file:
-
-```env
-NEXT_PUBLIC_API_URL=https://whatwasithinking-production.up.railway.app
-```
-
-> For local backend development, set `NEXT_PUBLIC_API_URL=http://localhost:8080`
-
 ### 3. Run dev server
 
 ```bash

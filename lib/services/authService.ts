@@ -11,7 +11,7 @@ export type User = {
 export type AuthResponse = {
   message: string
   status: number
-  user: User
+  data: User
 }
 
 export const authService = {
@@ -20,9 +20,9 @@ export const authService = {
 
   login: async (payload: { email: string; password: string }): Promise<AuthResponse> => {
     const data = await apiClient<AuthResponse>('/api/v1/login', { method: 'POST', body: payload })
-    storage.set('token', data.user.token ?? '')
-    storage.set('user_id', data.user.id)
-    storage.set('user', JSON.stringify(data.user))
+    storage.set('token', data.data.token ?? '')
+    storage.set('user_id', data.data.id)
+    storage.set('user', JSON.stringify(data.data))
     return data
   },
 

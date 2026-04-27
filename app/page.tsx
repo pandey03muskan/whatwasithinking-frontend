@@ -69,23 +69,6 @@ export default function Home() {
             I already have an account
           </Link>
         </div>
-
-        {/* Feature cards preview */}
-        {/* <div className="mt-20 w-full max-w-3xl grid grid-cols-3 gap-4 px-4">
-          {[
-            { title: 'Instant capture', body: 'Write it down before it slips away. No friction, no setup.' },
-            { title: 'Always accessible', body: 'Your notes sync and are ready whenever inspiration strikes.' },
-            { title: 'Beautifully simple', body: 'No clutter, no distractions. Just you and your thoughts.' },
-          ].map(card => (
-            <div
-              key={card.title}
-              className="bg-white rounded-2xl p-5 text-left ring-1 ring-brown-950/8 shadow-sm"
-            >
-              <h3 className="text-sm font-semibold text-brown-950 mb-1.5">{card.title}</h3>
-              <p className="text-xs text-brown-950/50 leading-relaxed">{card.body}</p>
-            </div>
-          ))}
-        </div> */}
       </main>
     </div>
   )
